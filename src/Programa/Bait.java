@@ -11,37 +11,39 @@ package Programa;
  */
 public class Bait {
     private boolean[] bait = new boolean[8];
+    private byte numDecimal;
     
     public Bait(){
         vaciar();
     }
-    public Bait(int i){
+    public Bait(byte i){
         bait = pasarABinario(i);
+        numDecimal = i;
     }
     
     public void vaciar(){
-        for (int i = 0; i < bait.length; i++) {
+        for (byte i = 0; i < bait.length; i++) {
             bait[i] = false;
         }
     }
     
-    public boolean[] pasarABinario(int num){
-        int contador;
+    public boolean[] pasarABinario(byte num){
+        byte contador;
         
-        boolean[] bits = new boolean[8];        
-        for (int i = 0; i < num; i++) {
-            contador = 0;
-            
-            do bits[contador] = !bits[contador];
-            while (!bits[contador++]);
+        boolean[] bits = new boolean[8];
+        for (byte i = 0; i < num; i++) {
+            contador = 0;            
+            do{
+                bits[contador] = !bits[contador];
+            }while (!bits[contador++]);
         }
         
         return bits;
     }
-    public int pasarADecimal(boolean[] bits){
-        int num = 0;
+    public byte pasarADecimal(boolean[] bits){
+        byte num = 0;
         
-        for (int i = 0; i < bits.length; i++) {
+        for (byte i = 0; i < bits.length; i++) {
             if (bits[i]) {
                 num += Math.pow(2, i);
             }
@@ -56,13 +58,13 @@ public class Bait {
     }
 
     public void sumarABait(boolean[] num){
-        int contador;
-        for (int i = 0; i < num.length - 1; i++) {
+        byte contador;
+        for (byte i = 0; i < num.length - 1; i++) {
             if (num[i]) {
                 contador = i;
                 do {
                     bait[contador] = !bait[contador];                    
-                } while (!bait[contador++]);                
+                } while (!bait[contador++]);
             }
         }
     }
@@ -73,8 +75,8 @@ public class Bait {
     }
     
     public void restarABait(boolean[] num){
-        int contador;
-        for (int i = 0; i < num.length - 1; i++) {
+        byte contador;
+        for (byte i = 0; i < num.length - 1; i++) {
             if (num[i]) {
                 contador = i;
                 do {
@@ -89,10 +91,17 @@ public class Bait {
     }
     
     public void multiplicar(boolean[] num1, boolean[] num2){
-        for (int i = 0; i < pasarADecimal(num1); i++) {
+        for (byte i = 0; i < pasarADecimal(num1); i++) {
             sumarABait(num2);
         }
     }
+    
+    public void potencia(boolean[] num1, boolean[] num2){
+        for (byte i = 0; i < pasarADecimal(num2); i++) {
+            multiplicar(num1, num1);
+        }
+    }
+    
     /*
     public void pasarManco(Persona jaime){
         System.out.println("Manco");
